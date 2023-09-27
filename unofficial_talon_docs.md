@@ -18,14 +18,14 @@ So why do we have two kinds of configuration/scripting files (`.py` and `.talon`
 
 The primary way to extend talon is using `.talon` files placed in the `user` directory. A talon file comes in two parts: a [context header](/unofficial_talon_docs#context-header) defining the circumstances in which the file is active, and a body that implements various behaviors within that context. The body of a talon file can:
 
-* Define [voice commands](/unofficial_talon_docs#voice-commands).
-* Define [keyboard shortcuts](/unofficial_talon_docs#tags-settings-and-other-capabilities).
-* [Activate registered tags or apps and change settings](/unofficial_talon_docs#tags-settings-and-other-capabilities).
-* Implement/override the behavior of [actions](/unofficial_talon_docs#actions). However, this is **deprecated**; you should implement actions in Python files instead.
+- Define [voice commands](/unofficial_talon_docs#voice-commands).
+- Define [keyboard shortcuts](/unofficial_talon_docs#tags-settings-and-other-capabilities).
+- [Activate registered tags or apps and change settings](/unofficial_talon_docs#tags-settings-and-other-capabilities).
+- Implement/override the behavior of [actions](/unofficial_talon_docs#actions). However, this is **deprecated**; you should implement actions in Python files instead.
 
 An example `.talon` file might look like this:
 
-```
+```````
 # Comments start with a # sign, and they must always be on their own line.
 #
 # This part, the context header, defines under which circumstances this file applies.
@@ -54,7 +54,7 @@ tag(): user.tabs
 # This adjusts settings (within this file's context).
 settings():
     key_wait = 1.5
-```
+```````
 
 ### Context header
 
@@ -95,7 +95,7 @@ The following requirements can be set:
 `hostname`
 : match the 'hostname' of your machine (from the `hostname` CLI command on Linux/Mac). Useful if you want to have a single set of custom config but have some machine-specific parts.
 
-Additionally, you can create user `scope`s. `scope`s allow matching on additional arbitrary string information supplied by user scripts. For example you might write a `scope` called `slack_workspace_name`. You'd then be able to make .talon files that only matched a particular Slack workspace by putting a line like 'user.slack\_workspace\_name: Talon' in the header. See [the scope concept section](/unofficial_talon_docs#scopes) below for more information.
+Additionally, you can create user `scope`s. `scope`s allow matching on additional arbitrary string information supplied by user scripts. For example you might write a `scope` called `slack_workspace_name`. You'd then be able to make .talon files that only matched a particular Slack workspace by putting a line like 'user.slack_workspace_name: Talon' in the header. See [the scope concept section](/unofficial_talon_docs#scopes) below for more information.
 
 Each individual header line has the format `[and] [not] <requirement or scope name>: (<literal match value> | /<regex match value>/<python regex flags>)` where `[]` indicates an optional token, `(|)` indicates exclusive options, and `<>` a special segment. Some examples of valid lines are `title: foo`, `title: /foo/i`, `and tag: user.bar`, `not tag: /foo/`, and `and not tag: user.foo`.
 
@@ -146,18 +146,18 @@ This command, for example, will press the shortcut alt-shift-down whenever you s
 
 Rules have a versatile syntax that is like a word based regex:
 
-| Syntax | Description | Matches |
-| --- | --- | --- |
-| `foo` | Words | “foo” |
-| `[foo]` | Optional | “foo” or null (nothing) |
-| `foo*` | Zero or more | “”, “foo”, “foo foo”, ... |
-| `foo+` | One or more | “foo”, “foo foo”, ... |
-| `foo|bar` | Choice | “foo”, “bar” |
-| `(foo)` | Precedence/grouping | “foo” |
-| `{some_list}` | [List](/unofficial_talon_docs/#lists) | Depends on the list. |
-| `<some_capture>` | [Capture](/unofficial_talon_docs/#captures) | Depends on the capture. |
-| `^foo` | Start anchor | See below |
-| `foo$` | End anchor | See below |
+| Syntax           | Description                                 | Matches                   |
+| ---------------- | ------------------------------------------- | ------------------------- | ------------ |
+| `foo`            | Words                                       | “foo”                     |
+| `[foo]`          | Optional                                    | “foo” or null (nothing)   |
+| `foo*`           | Zero or more                                | “”, “foo”, “foo foo”, ... |
+| `foo+`           | One or more                                 | “foo”, “foo foo”, ...     |
+| `foo             | bar`                                        | Choice                    | “foo”, “bar” |
+| `(foo)`          | Precedence/grouping                         | “foo”                     |
+| `{some_list}`    | [List](/unofficial_talon_docs/#lists)       | Depends on the list.      |
+| `<some_capture>` | [Capture](/unofficial_talon_docs/#captures) | Depends on the capture.   |
+| `^foo`           | Start anchor                                | See below                 |
+| `foo$`           | End anchor                                  | See below                 |
 
 Rules can be anchored or unanchored. Talon has a system that detects when a user is and isn't speaking which it uses to break up microphone input into a sequence of 'utterance blocks'. So if you said "first bit ... other ... bits" ('...' means a sufficiently long pause), then Talon might turn this into three utterance blocks: ["first bit", "other", "bits"]. Anchoring a rule requires that it occur at the start or end (or both) of an utterance block.
 
@@ -340,8 +340,7 @@ All Actions, Lists etc. must first be declared via a Module before they can be r
 
 ### Contexts
 
-A *context* specifies conditions under which to add new behavior or override existing behavior. A context can check for [several properties](/unofficial_talon_docs#context-header) like your OS, the name of the current application, etc.  Within a particular context you can implement/override the behavior of [actions](/unofficial_talon_docs#actions), adjust [settings](/unofficial_talon_docs#talon-settings), activate [tags](/unofficial_talon_docs#tags), and redefine [lists](#lists) and [captures](#captures). Note that you cannot define new voice commands in Python, that can only be done in `.talon` files.
-
+A _context_ specifies conditions under which to add new behavior or override existing behavior. A context can check for [several properties](/unofficial_talon_docs#context-header) like your OS, the name of the current application, etc. Within a particular context you can implement/override the behavior of [actions](/unofficial_talon_docs#actions), adjust [settings](/unofficial_talon_docs#talon-settings), activate [tags](/unofficial_talon_docs#tags), and redefine [lists](#lists) and [captures](#captures). Note that you cannot define new voice commands in Python, that can only be done in `.talon` files.
 
 In Python, you can construct a context like so:
 
@@ -431,7 +430,7 @@ class MyEmacsActions:
             return "emacs__" + s
         else:
             # This will call the next most specific action implementation (in our case the
-            # default one specified on the module). This lets you selectively override 
+            # default one specified on the module). This lets you selectively override
             # existing behavior.
             return actions.next(s)
 ```
@@ -445,6 +444,7 @@ Actions are self-documenting. A list of all defined actions can be accessed via 
 A list associates sequences of spoken words with strings that can be used in voice commands. This is useful for commands that permit a choice from a list of options. For example, imagine you wanted to say "exception EXCEPTION" and have Talon type in a programming language appropriate exception class name. You could do that using a list as follows:
 
 **`exceptions.py`:**
+
 ```python
 from talon import Module, Context
 
@@ -476,6 +476,7 @@ ctx_java.lists["user.exception_class"] = {
 This sets up a list which matches a list of standard exceptions for the target programming language. Note that we can have a different set of item keys in the list for different contexts. Note also that our list (like user defined actions) is prefixed with `user.` to identify it as custom code.
 
 **`exceptions.talon`:**
+
 ```
 exception {user.exception_class}: insert(user.exception_class)
 ```
@@ -495,6 +496,7 @@ Captures parse some user-spoken words and run arbitrary Python code to produce a
 An example is defining a grammar for playing computer games where a character moves around on a square grid using a d-pad type interface (up, down, up right etc.). We might like to be able say something like "move north east" or "attack west". This could be implemented as follows:
 
 **`directions.py`**:
+
 ```python
 from typing import Dict
 from talon import Module, actions
@@ -552,6 +554,7 @@ class GameActions:
 This code first implements a new capture which matches on any of the compass directions, parses that and returns a data structure describing which directions were indicated. There is also a set of actions included which take this data structure and use it to press the appropriate keys.
 
 **`game_one.talon`**:
+
 ```
 move <user.dpad_input>: user.dpad_move(user.dpad_input)
 attack <user.dpad_input>: user.dpad_attack(user.dpad_input)
@@ -608,7 +611,7 @@ Note that all I needed to do was implement the capture with a new rule parameter
 
 ### Tags
 
-Besides concrete features like an application's name or a window's title, a context can also select for *tags*. Tags have a couple of main uses:
+Besides concrete features like an application's name or a window's title, a context can also select for _tags_. Tags have a couple of main uses:
 
 1. Tags can be used to activate additional voice commands within a particular context. For example `knausj_talon` has some tab management commands (e.g. tab new) that apply to many applications. Application specific contexts or `.talon` files can simply enable the tag (and potentially implement the relevant actions) to activate those voice commands.
 2. Tags can be enabled from Python to activate a set of voice commands given certain conditions. For example the mouse grid activates a tag when it is visible. This tag enables the 'grid off' and 'grid reset' commands.
@@ -616,6 +619,7 @@ Besides concrete features like an application's name or a window's title, a cont
 To make a tag available, it must first be declared in a module:
 
 **`generic_application_features.py`:**
+
 ```python
 from talon import Module
 
@@ -627,6 +631,7 @@ mod.tag("tabs", desc="basic commands for working with tabs within a window are a
 Next let's define a set of generic voice commands we think will apply to all applications with tabs:
 
 **`tabs.talon`:**
+
 ```
 # This selects for the tag 'user.tabs'.
 tag: user.tabs
@@ -641,6 +646,7 @@ reopen tab: app.tab_reopen()
 Finally, let's activate these voice commands for the firefox application:
 
 **`firefox.talon`:**
+
 ```
 app: Firefox
 -
@@ -648,7 +654,7 @@ app: Firefox
 tag(): user.tabs
 ```
 
-Of course, the commands we defined in `tabs.talon` just invoke corresponding [actions](/unofficial_talon_docs#actions), so unless the default behavior of those actions is what we want, we'd also need to *implement* them in a Python file (see [Actions](#actions)). Happily, in this case the default behavior suffices. Tags and actions often go together in this way.
+Of course, the commands we defined in `tabs.talon` just invoke corresponding [actions](/unofficial_talon_docs#actions), so unless the default behavior of those actions is what we want, we'd also need to _implement_ them in a Python file (see [Actions](#actions)). Happily, in this case the default behavior suffices. Tags and actions often go together in this way.
 
 There's also the option of enabling tags from within Python. To do that you can use a Context instance like this:
 
@@ -671,6 +677,7 @@ Tags are a commonly used part of the Talon framework. Related but less commonly 
 Talon allows you to give a 'well-known' name to an app. This lets you decouple the app matcher logic from the places it is used.
 
 Register and identify the 'fancyedit' app via a Talon Module in Python - **`fancyedit.py`:**
+
 ```python
 from talon import Module
 mod = Module()
@@ -686,6 +693,7 @@ and app.exe: fancyed.exe
 ```
 
 Add another possible matcher for fancyedit in a different file than the one the well-known name was defined in - **`fancyedit_custom.py`:**
+
 ```python
 from talon import Context
 ctx = Context()
@@ -699,12 +707,12 @@ ctx.apps = ['fancyedit']
 ```
 
 Use the well-known app - **`fancyedit.talon`:**
+
 ```
 app: fancyedit
 -
 my fancy editor command: key(ctrl-alt-shift-y)
 ```
-
 
 ### Modes
 
@@ -772,6 +780,7 @@ Scopes allow you to supply additional properties that can be matched in the head
 You need to write custom Python code to keep your scope information up to date. The following example implements a scope that makes the current time available as a matcher property.
 
 `test.py`
+
 ```python
 import datetime
 from talon import Module, cron
@@ -789,6 +798,7 @@ cron.interval("1m", my_scope_updater.update)
 ```
 
 `test.talon`
+
 ```
 # This matcher can either be a plain string or a regex
 user.current_time: /AM$/
@@ -807,6 +817,7 @@ Settings allow you to control some of the parameters of your python files by cha
 Settings are defined on Modules. Each setting has a name, type, default value, and description. The following example shows how to define a setting in python, and save its value in a variable. You can call .get() on the variable to access the current value of the setting.
 
 `setting.py`
+
 ```
 from talon import Module
 
@@ -827,6 +838,7 @@ Note that the name of the setting (the first argument to mod.setting) in the exa
 The following example shows how you would change the value for that setting in a .talon file. Any number of settings can be defined in a single settings block, but any invalid syntax will prevent the entire block from applying.
 
 `setting.talon`
+
 ```
 -
 settings():
@@ -837,6 +849,7 @@ settings():
 You can also set the value of a setting from Python:
 
 `myfile.py`
+
 ```
 from talon import Context
 
@@ -848,6 +861,7 @@ ctx.settings["user.my_user_file_set_horizontal_position"] = 50
 It is also possible to register a callback function to be called whenever a setting changes. This is done by calling settings.register() with a setting name and a function to call. If the name string is blank (like in the example below) then the callback function will be called whenever any setting is changed. When the name is not blank the function will only be called when a setting with a matching name is changed.
 
 `listener.py`
+
 ```
 def settings_change_handler(*args):
     print("A setting has changed")
@@ -871,12 +885,12 @@ Talon also has basic logging functionality. If you have run Talon from the termi
 
 This section lists some built in methods which are useful for developing or debugging Talon behaviour. The following are all imported by default into the REPL and aren't really meant to be used outside that context.
 
-* `sim("tab close")` - Finds the .talon file that would handle the given command in the current context. If the command is not active in the current context, then it prints an error. Useful for finding the relevant code for a voice command. You might want to paste something like `import time;time.sleep(5);sim("tab close")` in to the REPL to give you a chance to switch to the appropriate context.
-* `mimic("say hello world")` - Executes the given voice command like you spoke it in to the microphone. Can be useful to re-run voice commands while editing them so you don't have to keep saying the same thing.
-* `actions.find("string")` - Searches the name, documentation, and code implementing an action for the given substring. Prints out a list of matches.
-* `actions.list("edit")` - Prints out all registered actions matching the given prefix. If no argument is supplied then lists all actions. See the [basic customisation page](/basic_customization/#actions-in-talon-files) for a trick to copy this output into your clipboard.
-* `events.tail()` - If you're not getting enough information about what Talon is doing from the log file you can take a look at this method. It prints out Talon internal events, user actions called, scope changes etc. to the REPL. For even more logging try the `events.tail(noisy=True)` flag. You can also print out historical events and filter the events, run `help(events.tail)` to see the options.
-* `registry.commands`, `registry.lists` etc. - Lets you view the currently active set of commands, lists, actions etc. that Talon is considering.
+- `sim("tab close")` - Finds the .talon file that would handle the given command in the current context. If the command is not active in the current context, then it prints an error. Useful for finding the relevant code for a voice command. You might want to paste something like `import time;time.sleep(5);sim("tab close")` in to the REPL to give you a chance to switch to the appropriate context.
+- `mimic("say hello world")` - Executes the given voice command like you spoke it in to the microphone. Can be useful to re-run voice commands while editing them so you don't have to keep saying the same thing.
+- `actions.find("string")` - Searches the name, documentation, and code implementing an action for the given substring. Prints out a list of matches.
+- `actions.list("edit")` - Prints out all registered actions matching the given prefix. If no argument is supplied then lists all actions. See the [basic customisation page](/basic_customization/#actions-in-talon-files) for a trick to copy this output into your clipboard.
+- `events.tail()` - If you're not getting enough information about what Talon is doing from the log file you can take a look at this method. It prints out Talon internal events, user actions called, scope changes etc. to the REPL. For even more logging try the `events.tail(noisy=True)` flag. You can also print out historical events and filter the events, run `help(events.tail)` to see the options.
+- `registry.commands`, `registry.lists` etc. - Lets you view the currently active set of commands, lists, actions etc. that Talon is considering.
 
 ### API functions
 
@@ -884,17 +898,17 @@ Talon provides an API under the `talon` package allowing you to perform various 
 
 A quick pointer to some APIs follows:
 
-* `__init__.pyi` - The main API functionality is imported here (e.g. Module, Context, actions). This is what you import when you include `import talon` in your code.
-* `ui.pyi` - window and workspace management functionality and focus change events. OS specific functionality is imported at the top of the file from `(linux|mac|windows)/ui.pyi`.
-* `clip.pyi` - Cross platform clipboard monitoring and management.
-* `cron.pyi` - Periodic tasks, use this for polling or background tasks so as not to block the main Talon thread.
-* `screen.pyi` - Monitor/screen management querying functionality (e.g. get dimensions of screen), also screenshot functions.
-* `imgui.pyi` - A simple GUI system for drawing basic floating windows including text and buttons.
-* `canvas.pyi` - A floating canvas implementation with transparency that optionally captures mouse and keyboard events. See also the `talon.skia` package which provides the drawing functions (based on [the Skia library](https://skia.org/docs/)).
-* `noise.pyi` - Register for pop and hiss noise events.
-* `experimental/` - This package contains experimental APIs which may change in signature or be removed.
-* `ctrl.pyi` - 'Low level' mouse and keyboard event injection. You should prefer using the exposed mouse/keyboard actions rather than this.
-* `fs.pyi` - Watch files and folders for changes.
+- `__init__.pyi` - The main API functionality is imported here (e.g. Module, Context, actions). This is what you import when you include `import talon` in your code.
+- `ui.pyi` - window and workspace management functionality and focus change events. OS specific functionality is imported at the top of the file from `(linux|mac|windows)/ui.pyi`.
+- `clip.pyi` - Cross platform clipboard monitoring and management.
+- `cron.pyi` - Periodic tasks, use this for polling or background tasks so as not to block the main Talon thread.
+- `screen.pyi` - Monitor/screen management querying functionality (e.g. get dimensions of screen), also screenshot functions.
+- `imgui.pyi` - A simple GUI system for drawing basic floating windows including text and buttons.
+- `canvas.pyi` - A floating canvas implementation with transparency that optionally captures mouse and keyboard events. See also the `talon.skia` package which provides the drawing functions (based on [the Skia library](https://skia.org/docs/)).
+- `noise.pyi` - Register for pop and hiss noise events.
+- `experimental/` - This package contains experimental APIs which may change in signature or be removed.
+- `ctrl.pyi` - 'Low level' mouse and keyboard event injection. You should prefer using the exposed mouse/keyboard actions rather than this.
+- `fs.pyi` - Watch files and folders for changes.
 
 You are also able to use almost all of the CPython standard library. So you can use that do do network requests, maths operations, or execute subprocesses for example. Other Python packages like numpy may be included in the Talon distribution as an implementation detail, but are not guaranteed to be included forever.
 
@@ -932,4 +946,28 @@ The following three settings, `insert_wait`, `key_hold`, and `key_wait`, can be 
 `speech.timeout`
 : This determines how long a pause Talon waits for before deciding you've finished speaking and interpreting what you've just said as a sequence of commands. This parameter is generally very important; for example, it determines the the amount of time you can pause between saying 'phrase' and the following phrase.
 
-  It is measured in seconds; the default is 0.150, i.e. 150 milliseconds. It has been mentioned in #beta that this setting may not always be available as it was offered as a quick fix in Talon 1283 for Talon 1274 cutting input off too soon sometimes.
+It is measured in seconds; the default is 0.150, i.e. 150 milliseconds. It has been mentioned in #beta that this setting may not always be available as it was offered as a quick fix in Talon 1283 for Talon 1274 cutting input off too soon sometimes.
+
+## `.talon-list` files
+
+`.talon-list` files are a special type of `.talon` file. They are used solely to define lists of strings that can be used in voice commands or your Talon Python scripts. They can do exactly the same things as a Python Context with only a matches property and a single list on it. They are primarily intended for reducing verbosity and making list configuration easier for end users. If you are looking to configure settings it is better to use a `settings()` block in a `.talon` file as a settings block more clearly communicates that it is an internal setting and not part of a capture rule (like a `.talon-list` file would likely be).
+
+A `.talon-list` doesn't require a `:` if the key is the same as the value. The right hand side of the key value pair is a string with or without quotes. It uses the same parser as `.talon` files and the syntax is a strict subset of the `.talon` file syntax, except for the ability to skip the colon and just have a word by itself. You can use tags and scopes in `.talon-list` files just like normal `.talon` files. In the context header, you should declare the name by which the list will be referred to in voice commands or Python by typing `list:` followed by the name within the `user` namespace. Everything declared in a particular `.talon-list` ends up in a single list. The following example shows a `.talon-list` file that defines a few special characters. Note how the string doesn't need to be wrapped in quotations and can either be just itself or a mapping to a different string.
+
+```
+list: user.key_special
+-
+
+enter
+tab
+delete
+
+page up:                    pageup
+page down:                  pagedown
+```
+
+We could then use this list in a `.talon` file like so:
+
+```
+{user.key_special}:              key(symbol)
+```
