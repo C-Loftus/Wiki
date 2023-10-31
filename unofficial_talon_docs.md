@@ -969,5 +969,5 @@ page down:                  pagedown
 We could then use this list in a `.talon` file like so:
 
 ```
-{user.key_special}:              key(symbol)
+{user.key_special}:              key(key_special)
 ```

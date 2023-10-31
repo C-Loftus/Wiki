@@ -1,8 +1,8 @@
 # Talon user file set list
 
-The main Talon user file set for Talon is of course knausj\_talon, but people have created several others. These range from 'base' user file sets that contain their whole Talon setup through to sets which build on top of knausj\_talon functionality.
+The main Talon user file set for Talon is of course  the Talon `community` repository but people have created several others. These range from 'base' user file sets that contain their whole Talon setup through to sets which build on top of `community` functionality.
 
-If intended for public consumption, these Talon user file sets are mostly annouced via the [Slack channel](/). Aside from that there are a few ways you can discover them:
+If intended for public consumption, these Talon user file sets are mostly annouced via the [Slack channel](https://talonvoice.com/chat). Aside from that there are a few ways you can discover them:
 
 * You can make use of the [talon code search](https://search.talonvoice.com/search/). This aims to search all known github repositories containing Talon related code. If you're looking for integration with a particular application this is a good option.
 * You can browse the [github talonvoice topic](https://github.com/topics/talonvoice). Repositories can optionally tag themselves with this to aid discoverability.
@@ -10,7 +10,7 @@ If intended for public consumption, these Talon user file sets are mostly annouc
 
 ## Voice controlled hands free mouse replacements
 
-The easiest way to control your mouse with Talon is to use an eye tracker. But this is fairly expensive hardware. There are several voice/noise only options in addition to the 'mouse grid' built in to knausj\_talon.
+The easiest way to control your mouse with Talon is to use an eye tracker. But this is fairly expensive hardware. There are several voice/noise only options in addition to the 'mouse grid' built in to `community`.
 
 * [gaze-ocr](https://github.com/wolfmanstout/talon-gaze-ocr) for advanced cursor control using eye tracking and text recognition (OCR)
 * [Dense Mouse Grid](https://github.com/tararoys/dense-mouse-grid/tree/dense_mouse_grid_2/dense_mouse_grid) Less obtrusive overlay combining a letter and number grid to position the mouse.
@@ -22,8 +22,8 @@ The easiest way to control your mouse with Talon is to use an eye tracker. But t
 
 ## Programming and editor integrations
 
-* [Cursorless](https://www.cursorless.org/) Structural code editing in VSCode. This with [`knausj_talon`](https://github.com/knausj85/knausj_talon) is the state of the art for voice coding with Talon currently.
-* [Fidgetingbit's knausj fork](https://github.com/fidgetingbits/knausj_talon) Fork of knausj\_talon most famous for its integration with the (N)Vim code editor.
+* [Cursorless](https://www.cursorless.org/) Structural code editing in VSCode. This alongside [`community`](https://github.com/knausj85/knausj_talon) is the state of the art for voice coding with Talon currently.
+* [Fidgetingbit's knausj fork](https://github.com/fidgetingbits/knausj_talon) Fork of knausj\_talon (aka `community`) most famous for its integration with the (N)Vim code editor.
 
 ## User Interface
 
@@ -37,7 +37,7 @@ The easiest way to control your mouse with Talon is to use an eye tracker. But t
 
 ## Command builders and macros
 
-Talon user sets that allow you to build voice commands more easily or define commands in a quick ad-hoc way. knausj\_talon has an ephemeral macro system built in, but these user file sets extend that further.
+Talon user sets that allow you to build voice commands more easily or define commands in a quick ad-hoc way. The `community` repository has an ephemeral macro system built in, but these user file sets extend that further.
 
 * [Talon UI helper](https://github.com/splondike/talon_ui_helper) Command wizard that lets you build TalonScript commands which work with the screen as an image. For example it lets you easily build a command to click an icon, or show an overlay for clicking items in a list.
 * [Screen spots](https://github.com/AndrewDant/screen-spots) Lets you quickly save mouse positions on the screen and then click them with a short voice command. Useful for games with fixed UI element position.

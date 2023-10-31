@@ -1,17 +1,17 @@
 ## Basic Usage
 
-The examples below are just a very small selection of common commands for working with apps, tabs, media, mouse, etc that should help you be productive with Talon right away.  These are based on the [knaus_talon](https://github.com/knausj85/knausj_talon) Talon user file set (see [the earlier section](#install-a-talon-user-file-set)). These commands may vary depending on your individual setup.
+The examples below are just a very small selection of common commands for working with apps, tabs, media, mouse, etc that should help you be productive with Talon right away. These are based on the [`community`](https://github.com/knausj85/knausj_talon) Talon user file set see [the earlier section](/talon_user_file_sets.md). These commands may vary depending on your individual setup.
 
+> As a clarificaton, the `community` repository was previously called `knausj_talon`, and you may come across older documentation with this naming convention.
 
 ### Command history
 
 `command history`
 : Toggles the command history display, which shows the last few commands as Talon understood them; if you're not sure what Talon is doing, or if it understood you correctly, this is how to check it.
 
-
 ### Show available comands
 
-`knausj_talon` has an integrated help.  It can show you a list of all defined commands, or just all commands that are available now.
+`knausj_talon` has an integrated help. It can show you a list of all defined commands, or just all commands that are available now.
 
 `help alphabet`
 : show the spelling alphabet for pressing individual keys
@@ -27,7 +27,6 @@ The examples below are just a very small selection of common commands for workin
 
 `help close`
 : hide any open help window again
-
 
 ### Switch between modes
 
@@ -48,7 +47,6 @@ There are currently no visual cues about the current mode. You can tell which mo
 
 `talon wake`
 : wake up and return to previous mode
-
 
 ### Open and switch between windows in apps such as Chrome
 
